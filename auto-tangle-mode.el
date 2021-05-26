@@ -1,5 +1,12 @@
 ;;; auto-tangle-mode.el --- Minor mode for tangling literate files on save
 
+;; Author: Nicholas Vollmer <progfolio@protonmail.com>
+;; URL: https://github.com/progfolio/auto-tangle-mode.el
+;; Created: Jun 23, 2019
+;; Keywords: org, convenience
+;; Package-Requires: ((emacs "27.1"))
+;; Version: 0.0.0
+
 ;;; Commentary:
 ;; A simple mode for tangling literate org files on save.
 
