@@ -1,0 +1,15 @@
+* Auto Tangle Mode
+
+A simple minor mode which automatically tangles literate Org mode files on save.
+By default it will only tangle if point is in an org-src buffer or within a source block.
+It offers the following customization variables:
+
+- auto-tangle-predicates ::
+  List of predicates checked before tangling.
+  Any predicate returning a nil value prevents tangling and running hooks.
+
+- auto-tangle-after-tangle-hook ::
+  Hooks run after tangling.
+
+- auto-tangle-before-tangle-hook ::
+  Hooks run before tangling.
