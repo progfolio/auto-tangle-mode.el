@@ -26,9 +26,10 @@ Any predicate returning a nil value prevents tangling and hooks from being run."
   "Hooks run before tangling."
   :type 'hook)
 
+;;;; Functions:
 (defun auto-tangle-org-mode-p ()
   "Non-nil if current buffer's `major-mode' is `org-mode'."
-  (equal major-mode 'org-mode))
+  (derived-mode-p 'org-mode))
 
 (defun auto-tangle-maybe-tangle ()
   "Tangle current buffer if `auto-tangle-predicates' are satisified.
