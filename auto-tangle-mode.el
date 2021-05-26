@@ -18,7 +18,7 @@
 Any predicate returning a nil value prevents tangling and hooks from being run."
   :type 'list)
 
-(defcustom auto-tangle-after-tangle-hook ()
+(defcustom auto-tangle-after-tangle-hook (auto-tangle-process-buffer-contents)
   "Hooks run after tangling."
   :type 'hook)
 
@@ -30,6 +30,11 @@ Any predicate returning a nil value prevents tangling and hooks from being run."
 (defun auto-tangle-org-mode-p ()
   "Non-nil if current buffer's `major-mode' is `org-mode'."
   (derived-mode-p 'org-mode))
+
+(defun auto-tangle-process-buffer-contents ()
+  "Message contents of auto-tangle process buffer."
+  (when-let ((buffer (get-buffer "*auto-tangle*")))
+    (message "%S" (with-current-buffer buffer (buffer-string)))))
 
 (defun auto-tangle-maybe-tangle ()
   "Tangle current buffer if `auto-tangle-predicates' are satisified.
@@ -48,8 +53,16 @@ Run `auto-tangle-before-tangle-hook' and `auto-tangle-after-tangle-hook'."
           (org-reveal)
           (when (seq-every-p #'funcall auto-tangle-predicates)
             (run-hooks 'auto-tangle-before-tangle-hook)
-            (org-babel-tangle)
-            (run-hooks 'auto-tangle-after-tangle-hook)))))))
+            (make-process :name "auto-tangle"
+                          :buffer "*auto-tangle*"
+                          :command (list "emacs" "--batch" "--execute"
+                                         (format
+                                          "(progn (require 'ob-tangle) (org-babel-tangle-file %S))"
+                                          (buffer-file-name)))
+                          :sentinel
+                          ;;@INCOMPLETE: Should we refuse to run hooks if process errors?
+                          (lambda (_process _event)
+                            (run-hooks 'auto-tangle-after-tangle-hook)))))))))
 
 (define-minor-mode auto-tangle-mode
   "Tangle Org src blocks on file save."
