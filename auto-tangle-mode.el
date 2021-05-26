@@ -51,9 +51,8 @@ Run `auto-tangle-before-tangle-hook' and `auto-tangle-after-tangle-hook'."
             (org-babel-tangle)
             (run-hooks 'auto-tangle-after-tangle-hook)))))))
 
-;;###autoload
 (define-minor-mode auto-tangle-mode
-  "Auto tangle Org src blocks on file save."
+  "Tangle Org src blocks on file save."
   :lighter " atm"
   (if auto-tangle-mode
       (add-hook 'after-save-hook 'auto-tangle-maybe-tangle nil t)
