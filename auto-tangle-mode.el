@@ -7,15 +7,24 @@
 (require 'org)
 (require 'ob-tangle)
 
-(defvar-local auto-tangle-predicates '(auto-tangle-org-mode-p org-in-src-block-p)
+;;;; Customizations:
+(defgroup auto-tangle-mode nil
+  "Minor mode for tangling literate files on save."
+  :group 'org
+  :prefix "auto-tangle-")
+
+(defcustom auto-tangle-predicates '(auto-tangle-org-mode-p org-in-src-block-p)
   "List of predicates checked before tangling.
-Any predicate returning a nil value prevents tangling and hooks from being run.")
+Any predicate returning a nil value prevents tangling and hooks from being run."
+  :type 'list)
 
-(defvar-local auto-tangle-after-tangle-hook ()
-  "Hooks run after tangling.")
+(defcustom auto-tangle-after-tangle-hook ()
+  "Hooks run after tangling."
+  :type 'hook)
 
-(defvar-local auto-tangle-before-tangle-hook ()
-  "Hooks run before tangling.")
+(defcustom auto-tangle-before-tangle-hook ()
+  "Hooks run before tangling."
+  :type 'hook)
 
 (defun auto-tangle-org-mode-p ()
   "Non-nil if current buffer's `major-mode' is `org-mode'."
