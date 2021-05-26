@@ -15,7 +15,7 @@
 (require 'ob-tangle)
 
 ;;;; Customizations:
-(defgroup auto-tangle-mode nil
+(defgroup auto-tangle nil
   "Minor mode for tangling literate files on save."
   :group 'org
   :prefix "auto-tangle-")
