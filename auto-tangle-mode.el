@@ -25,7 +25,7 @@
 Any predicate returning a nil value prevents tangling and hooks from being run."
   :type 'list)
 
-(defcustom auto-tangle-after-tangle-hook (auto-tangle-process-buffer-contents)
+(defcustom auto-tangle-after-tangle-hook '(auto-tangle-process-buffer-contents)
   "Hooks run after tangling."
   :type 'hook)
 
