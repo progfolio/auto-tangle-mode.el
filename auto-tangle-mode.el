@@ -1,4 +1,4 @@
-;;; auto-tangle-mode.el --- Minor mode for tangling literate files on save
+;;; auto-tangle-mode.el --- Minor mode for tangling literate files on save  -*- lexical-binding: t; -*-
 
 ;; Author: Nicholas Vollmer <progfolio@protonmail.com>
 ;; URL: https://github.com/progfolio/auto-tangle-mode.el
