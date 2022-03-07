@@ -41,7 +41,9 @@ Any predicate returning a nil value prevents tangling and hooks from being run."
 (defun auto-tangle-process-buffer-contents ()
   "Message contents of auto-tangle process buffer."
   (when-let ((buffer (get-buffer "*auto-tangle*")))
-    (message "%S" (with-current-buffer buffer (buffer-string)))))
+    (with-current-buffer buffer
+      (message "%s" (string-trim (buffer-substring-no-properties (point-min) (point-max)))
+      (erase-buffer)))))
 
 (defun auto-tangle-maybe-tangle ()
   "Tangle current buffer if `auto-tangle-predicates' are satisified.
