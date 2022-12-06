@@ -66,7 +66,7 @@ Run `auto-tangle-before-tangle-hook' and `auto-tangle-after-tangle-hook'."
                           :buffer "*auto-tangle*"
                           :command (list "emacs" "--batch" "--execute"
                                          (format
-                                          "(progn (require 'ob-tangle) (org-babel-tangle-file %S))"
+                                          "(progn (require 'ob-tangle) (setq org-confirm-babel-evaluate nil) (org-babel-tangle-file %S))"
                                           (buffer-file-name)))
                           :sentinel
                           ;;@INCOMPLETE: Should we refuse to run hooks if process errors?
