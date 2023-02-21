@@ -45,6 +45,18 @@ Any predicate returning a nil value prevents tangling and hooks from being run."
       (message "%s" (string-trim (buffer-substring-no-properties (point-min) (point-max))))
       (erase-buffer))))
 
+(defun auto-tangle-process-sentinel (_ event)
+  "Sentinel for auto-tangle process EVENT."
+  (let ((output (with-current-buffer (get-buffer-create "*auto-tangle*")
+                  (buffer-substring-no-properties (point-min) (point-max)))))
+    (if (not (equal event "finished\n"))
+        (user-error "%S" output)
+      (message "%S" output)
+      (run-hooks 'auto-tangle-after-tangle-hook)
+      (when-let ((buffer (get-buffer "*auto-tangle*"))
+                 ((buffer-live-p buffer)))
+        (kill-buffer buffer)))))
+
 (defun auto-tangle-maybe-tangle ()
   "Tangle current buffer if `auto-tangle-predicates' are satisified.
 Run `auto-tangle-before-tangle-hook' and `auto-tangle-after-tangle-hook'."
@@ -68,10 +80,7 @@ Run `auto-tangle-before-tangle-hook' and `auto-tangle-after-tangle-hook'."
                                          (format
                                           "(progn (require 'ob-tangle) (setq org-confirm-babel-evaluate nil) (org-babel-tangle-file %S))"
                                           (buffer-file-name)))
-                          :sentinel
-                          ;;@INCOMPLETE: Should we refuse to run hooks if process errors?
-                          (lambda (_process _event)
-                            (run-hooks 'auto-tangle-after-tangle-hook)))))))))
+                          :sentinel #'auto-tangle-process-sentinel)))))))
 
 (define-minor-mode auto-tangle-mode
   "Tangle Org src blocks on file save."
