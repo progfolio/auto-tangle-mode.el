@@ -72,7 +72,7 @@ Run `auto-tangle-before-tangle-hook' and `auto-tangle-after-tangle-hook'."
           (widen)
           (goto-char point)
           (org-reveal)
-          (when (seq-every-p #'funcall auto-tangle-predicates)
+          (when (run-hook-with-args-until-failure 'auto-tangle-predicates)
             (run-hooks 'auto-tangle-before-tangle-hook)
             (make-process :name "auto-tangle"
                           :buffer "*auto-tangle*"
