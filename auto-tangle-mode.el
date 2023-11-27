@@ -23,7 +23,7 @@
 (defcustom auto-tangle-predicates '(auto-tangle-org-mode-p org-in-src-block-p)
   "List of predicates checked before tangling.
 Any predicate returning a nil value prevents tangling and hooks from being run."
-  :type 'list)
+  :type '(list function))
 
 (defcustom auto-tangle-after-tangle-hook '(auto-tangle-process-buffer-contents)
   "Hooks run after tangling."
