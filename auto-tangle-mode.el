@@ -20,7 +20,7 @@
   :group 'org
   :prefix "auto-tangle-")
 
-(defcustom auto-tangle-predicates '(auto-tangle-org-mode-p org-in-src-block-p)
+(defcustom auto-tangle-predicates `(auto-tangle-org-mode-p ,(apply-partially #'org-in-src-block-p 'inside))
   "List of predicates checked before tangling.
 Any predicate returning a nil value prevents tangling and hooks from being run."
   :type '(list function))
