@@ -8,7 +8,7 @@
 ;; Version: 0.0.0
 
 ;;; Commentary:
-;; A simple mode for tangling literate org files on save.
+;; A simple mode for tangling literate Org files on save.
 
 ;;; Code:
 (require 'org)
